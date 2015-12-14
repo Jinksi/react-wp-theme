@@ -6,12 +6,11 @@ var sass = require('gulp-sass');
 
 gulp.task('serve', ['sass'], function () {
   browserSync.init({
-    server: './'
+    server: '.'
   });
   gulp.watch('./scss/**/*.scss', ['sass']);
   gulp.watch('./app.jsx').on('change', browserSync.reload);
-
-
+  gulp.watch('./index.html').on('change', browserSync.reload);
 });
 
 gulp.task('sass', function () {

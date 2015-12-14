@@ -204,8 +204,17 @@ body {
   font-size: 1.5em;
   line-height: 1.6;
   font-weight: 400;
-  font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #222; }
+  font-family: "Avenir", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: white;
+  background-image: linear-gradient(135deg, #f34235 33%, #fe5621 100%);
+  min-height: 100vh; }
+
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box; }
 
 a {
   color: #1eaedb; }
@@ -217,6 +226,9 @@ hr {
   margin-bottom: 3.5rem;
   border-width: 0;
   border-top: 1px solid #e1e1e1; }
+
+.banner {
+  padding: 40px 0; }
 
 .u-full-width {
   width: 100%;
@@ -240,7 +252,9 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 4.0rem;
   line-height: 1.2;
-  letter-spacing: -.1rem; }
+  letter-spacing: -.1rem;
+  font-weight: 900;
+  text-transform: uppercase; }
 
 h2 {
   font-size: 3.6rem;
@@ -627,6 +641,3 @@ ul,
 ol,
 form {
   margin-bottom: 2.5rem; }
-
-body {
-  background: whitesmoke; }
