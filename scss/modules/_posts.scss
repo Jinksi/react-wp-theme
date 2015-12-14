@@ -1,0 +1,17 @@
+.posts{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.post{
+  flex-basis: 250px;
+  margin: 10px;
+  border-radius: 3px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid white;
+  padding: 25px;
+  text-align: left;
+  .title{
+    border-bottom: 1px solid rgba(255,255,255,.5);
+  }
+}

@@ -312,7 +312,7 @@ p {
 .container {
   position: relative;
   width: 100%;
-  max-width: 960px;
+  max-width: 1050px;
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box; }
@@ -325,12 +325,12 @@ p {
 
 @media (min-width: 400px) {
   .container {
-    width: 85%;
+    width: 95%;
     padding: 0; } }
 
 @media (min-width: 550px) {
   .container {
-    width: 80%; }
+    width: 90%; }
   .column,
   .columns {
     margin-left: 4%; }
@@ -642,3 +642,19 @@ ul,
 ol,
 form {
   margin-bottom: 2.5rem; }
+
+.posts {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+
+.post {
+  flex-basis: 250px;
+  margin: 10px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid white;
+  padding: 25px;
+  text-align: left; }
+  .post .title {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
