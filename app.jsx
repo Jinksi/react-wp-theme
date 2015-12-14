@@ -1,24 +1,36 @@
 var App = React.createClass({
   getInitialState: function(){
+    var posts = [];
+    this.getPosts();
     return {
-      posts: [
-        {
-          id: '1',
-          title: 'Title',
-          content: 'Maecenas faucibus mollis interdum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.'
-        },
-        {
-          id: '2',
-          title: 'Post',
-          content: 'Maecenas faucibus mollis interdum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.'
-        },
-        {
-          id: '3',
-          title: 'Three',
-          content: 'Maecenas faucibus mollis interdum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.'
-        }
-      ]
+      posts: posts
     };
+  },
+  getPosts : function(){
+    var Component = this;
+    var postData = this.getData('/example-data.json', function(data){
+      var posts = [];
+      data.map(function(post){
+        posts = posts.concat({
+          id: post.id,
+          title: post.title.rendered,
+          content: post.content.rendered.substr(0, 120)
+        });
+      });
+      console.log(posts);
+      Component.setState({
+        posts: posts
+      });
+    });
+
+  },
+  getData: function(url, callback){
+    $.ajax({
+      url: url,
+      type: 'GET'
+    }).done(function(data){
+      callback(data);
+    });
   },
   render: function(){
     return (

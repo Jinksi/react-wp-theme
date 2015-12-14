@@ -207,7 +207,9 @@ body {
   font-family: "Avenir", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: white;
   background-image: linear-gradient(135deg, #f34235 33%, #fe5621 100%);
-  min-height: 100vh; }
+  min-height: 100vh;
+  background-attachment: fixed;
+  background-size: cover; }
 
 .app-container {
   height: 100vh;
@@ -646,7 +648,10 @@ form {
 .posts {
   display: flex;
   flex-direction: row;
-  justify-content: center; }
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 100px 0;
+  box-sizing: border-box; }
 
 .post {
   flex-basis: 250px;
