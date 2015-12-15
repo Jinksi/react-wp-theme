@@ -69,9 +69,11 @@ var App = React.createClass({
           id: page.id,
           title: page.title.rendered,
           content: page.content.rendered,
-          date: page.date
+          date: page.date,
+          menuOrder: page.menu_order
         });
       });
+      pages = _.sortBy(pages, 'menuOrder');
       Component.setState({
         pages: pages
       });
