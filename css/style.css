@@ -656,14 +656,13 @@ form {
 .posts {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  margin: 50px auto;
   box-sizing: border-box; }
 
 .post {
-  flex-basis: 40%;
-  margin: 10px;
+  flex-basis: 42%;
+  margin: 0 0 20px 0;
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid white;
@@ -673,6 +672,8 @@ form {
   .post:not(.single):hover {
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.25); }
+  .post.single {
+    margin: 0 auto; }
   .post .title {
     pointer-events: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.5); }

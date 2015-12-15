@@ -1,14 +1,15 @@
 .posts{
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  margin: 50px auto;
+  // margin: 50px auto;
   box-sizing: border-box;
 }
 .post{
-  flex-basis: 40%;
-  margin: 10px;
+
+  flex-basis: 42%;
+  margin: 0 0 20px 0;
   border-radius: 3px;
   background: rgba(255,255,255,.1);
   border: 1px solid white;
@@ -18,6 +19,9 @@
   &:not(.single):hover{
     cursor: pointer;
     background-color: transparentize(white, .75);
+  }
+  &.single{
+    margin: 0 auto;
   }
   .title{
     pointer-events: none;

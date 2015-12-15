@@ -146,7 +146,7 @@ var Post = React.createClass({
 var Single = React.createClass({
   render: function(){
     return (
-      <div className="post single">
+      <div className="post single container">
         <h5 className="title">{this.props.post.title}</h5>
         <span className="date">{moment(this.props.post.date).format("MMM Do YYYY")}</span>
         <div className="post-content" dangerouslySetInnerHTML={{__html: this.props.post.content}} />
