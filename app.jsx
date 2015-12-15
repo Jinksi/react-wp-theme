@@ -1,4 +1,10 @@
 var App = React.createClass({
+  getDefaultProps: function(){
+    return {
+      postsUrl: 'http://localhost:8888/react-wp-server/wp-json/wp/v2/posts',
+      pagesUrl: 'http://localhost:8888/react-wp-server/wp-json/wp/v2/pages'
+    };
+  },
   getInitialState: function(){
     var posts = [
       {
@@ -7,9 +13,18 @@ var App = React.createClass({
         content: 'none'
       }
     ];
+    var pages = [
+      {
+        id:2,
+        title: 'Default',
+        content: 'none'
+      }
+    ];
     this.getPosts();
+    this.getPages();
     return {
       posts: posts,
+      pages: pages,
       currentPage: 'home'
     };
   },
@@ -30,7 +45,7 @@ var App = React.createClass({
   },
   getPosts : function(){
     var Component = this;
-    var postData = this.getData('/example-data.json', function(data){
+    var postData = this.getData(this.props.postsUrl, function(data){
       var posts = [];
       data.map(function(post){
         posts = posts.concat({
@@ -42,6 +57,23 @@ var App = React.createClass({
       });
       Component.setState({
         posts: posts
+      });
+    });
+  },
+  getPages : function(){
+    var Component = this;
+    var pagesData = this.getData(this.props.pagesUrl, function(data){
+      var pages = [];
+      data.map(function(page){
+        pages = pages.concat({
+          id: page.id,
+          title: page.title.rendered,
+          content: page.content.rendered,
+          date: page.date
+        });
+      });
+      Component.setState({
+        pages: pages
       });
     });
   },
@@ -61,6 +93,8 @@ var App = React.createClass({
           return <Home />;
         case "posts":
           return <Posts posts={state.posts} handleClickPost={this.handlePostChange}/>;
+        case "page":
+          return <Page page={state.currentPage} />;
         case "single":
           return <Single post={state.currentPost}/>;
         default:
@@ -69,7 +103,7 @@ var App = React.createClass({
     }.bind(this);
     return (
       <div className="app-container banner">
-        <Header handlePageChange={this.handlePageChange}/>
+        <Header handlePageChange={this.handlePageChange} pages={this.state.pages}/>
           {renderPage(this.state)}
         <Footer />
       </div>
@@ -84,6 +118,10 @@ var Header = React.createClass({
     this.props.handlePageChange(target);
   },
   render: function(){
+    var renderNavPages = function(){
+      console.log(this.props.pages);
+
+    }.bind(this);
     return (
       <header className="header">
         <div className="container">
@@ -91,6 +129,11 @@ var Header = React.createClass({
             <ul>
               <li><a href="#home" onClick={this.handleClick}>Home</a></li>
               <li><a href="#posts" onClick={this.handleClick}>Posts</a></li>
+              {this.props.pages.map(function(page){
+                  return (
+                    <li key={page.id}><a href={'#' + page.title} onClick={this.handleClick}>{page.title}</a></li>
+                  );
+                }.bind(this))}
             </ul>
         </div>
       </header>
