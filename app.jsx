@@ -3,8 +3,14 @@ var App = React.createClass({
     var posts = [];
     this.getPosts();
     return {
-      posts: posts
+      posts: posts,
+      currentPage: 'home'
     };
+  },
+  handlePageChange: function(target){
+    this.setState({
+      currentPage: target
+    });
   },
   getPosts : function(){
     var Component = this;
@@ -21,7 +27,6 @@ var App = React.createClass({
         posts: posts
       });
     });
-
   },
   getData: function(url, callback){
     $.ajax({
@@ -32,10 +37,21 @@ var App = React.createClass({
     });
   },
   render: function(){
+    var renderPage = function(state){
+      console.log('Rendering ' + state.currentPage);
+      switch (state.currentPage){
+        case "home":
+          return <Home />;
+        case "posts":
+          return <Posts posts={state.posts}/>;
+        default:
+          return <NoMatch />;
+      }
+    };
     return (
       <div className="app-container banner">
-        <Header />
-        <Content posts={this.state.posts}/>
+        <Header handlePageChange={this.handlePageChange}/>
+          {renderPage(this.state)}
         <Footer />
       </div>
     );
@@ -43,18 +59,43 @@ var App = React.createClass({
 });
 
 var Header = React.createClass({
+  handleClick: function(e){
+    e.preventDefault();
+    var target = e.target.href.split('#')[1];
+    this.props.handlePageChange(target);
+  },
   render: function(){
     return (
       <header className="header">
         <div className="container">
           <h1>Header</h1>
+            <ul>
+              <li><a href="#home" onClick={this.handleClick}>Home</a></li>
+              <li><a href="#posts" onClick={this.handleClick}>Posts</a></li>
+            </ul>
         </div>
       </header>
     );
   }
 });
 
-var Content = React.createClass({
+//≠≠≠≠≠≠≠≠≠ Home
+var Home = React.createClass({
+  render: function(){
+    return (
+      <div className="home">
+          <div className="container">
+            <h4>Home Page</h4>
+            <p>This is the component <code>{'<Home/>'}</code></p>
+          </div>
+      </div>
+    );
+  }
+});
+
+//≠≠≠≠≠≠≠≠≠ Posts
+
+var Posts = React.createClass({
   render: function(){
     var renderPosts = this.props.posts.map(function(post){
       return (
@@ -68,6 +109,7 @@ var Content = React.createClass({
     );
   }
 });
+
 var Post = React.createClass({
   render: function(){
     return (
@@ -79,19 +121,31 @@ var Post = React.createClass({
   }
 });
 
+//≠≠≠≠≠≠≠≠≠ NoMatch
+var NoMatch = React.createClass({
+  render: function(){
+    return (
+      <div className="four04">
+          <div className="container">
+            <h4>404</h4>
+            <p>Not Found</p>
+          </div>
+      </div>
+    );
+  }
+});
+
+
 var Footer = React.createClass({
   render: function(){
     return (
-      <footer className="footer">
         <div className="container">
-          <h1>Footer</h1>
+            <h1>Footer</h1>
         </div>
-      </footer>
     );
   }
 });
 
 ReactDOM.render(
-  <App/>,
-  document.getElementById('app')
+  <App />, document.getElementById('app')
 );
