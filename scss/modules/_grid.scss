@@ -107,7 +107,7 @@
 
 // Self Clearing Goodness
 
-.container:after,
+.container:not(.flex):after,
 .row:after,
 .u-cf {
   content: "";

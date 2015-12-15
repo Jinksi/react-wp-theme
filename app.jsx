@@ -15,12 +15,14 @@ var App = React.createClass({
   getPosts : function(){
     var Component = this;
     var postData = this.getData('/example-data.json', function(data){
+      console.log(data);
       var posts = [];
       data.map(function(post){
         posts = posts.concat({
           id: post.id,
           title: post.title.rendered,
-          content: post.content.rendered
+          content: post.content.rendered,
+          date: post.date
         });
       });
       Component.setState({
@@ -114,8 +116,8 @@ var Post = React.createClass({
   render: function(){
     return (
       <div className="post">
-        <h4 className="title">{this.props.post.title}</h4>
-        <div dangerouslySetInnerHTML={{__html: this.props.post.content}}></div>
+        <h5 className="title">{this.props.post.title}</h5>
+        <span className="date">{moment(this.props.post.date).format("MMM Do YYYY")}</span>
       </div>
     );
   }
