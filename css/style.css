@@ -654,7 +654,7 @@ form {
   box-sizing: border-box; }
 
 .post {
-  flex-basis: 250px;
+  flex-basis: 40%;
   margin: 10px;
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.1);
@@ -663,3 +663,5 @@ form {
   text-align: left; }
   .post .title {
     border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
+  .post img {
+    max-width: 100%; }

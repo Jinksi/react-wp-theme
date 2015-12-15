@@ -14,10 +14,9 @@ var App = React.createClass({
         posts = posts.concat({
           id: post.id,
           title: post.title.rendered,
-          content: post.content.rendered.substr(0, 120)
+          content: post.content.rendered
         });
       });
-      console.log(posts);
       Component.setState({
         posts: posts
       });
@@ -74,7 +73,7 @@ var Post = React.createClass({
     return (
       <div className="post">
         <h4 className="title">{this.props.post.title}</h4>
-        <p>{this.props.post.content}</p>
+        <div dangerouslySetInnerHTML={{__html: this.props.post.content}}></div>
       </div>
     );
   }
@@ -91,7 +90,6 @@ var Footer = React.createClass({
     );
   }
 });
-
 
 ReactDOM.render(
   <App/>,
