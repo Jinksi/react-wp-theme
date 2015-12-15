@@ -212,7 +212,7 @@ body {
   background-size: cover; }
 
 .app-container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -668,8 +668,13 @@ form {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid white;
   padding: 25px;
-  text-align: left; }
+  text-align: left;
+  transition: all .3s ease; }
+  .post:not(.single):hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.25); }
   .post .title {
+    pointer-events: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
   .post img {
     max-width: 100%; }

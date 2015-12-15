@@ -14,7 +14,13 @@
   border: 1px solid white;
   padding: 25px;
   text-align: left;
+  transition: all .3s ease;
+  &:not(.single):hover{
+    cursor: pointer;
+    background-color: transparentize(white, .75);
+  }
   .title{
+    pointer-events: none;
     border-bottom: 1px solid rgba(255,255,255,.5);
   }
   img{
