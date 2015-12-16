@@ -77,18 +77,19 @@ var App = React.createClass({
     }.bind(this));
   },
   getPosts : function(){
-    var Component = this;
-    var postData = this.getData(this.props.wordpressUrl + '/wp-json/wp/v2/posts', function(data){
+    var self = this;
+    var postData = self.getData(self.props.wordpressUrl + '/wp-json/wp/v2/posts', function(data){
       var posts = [];
       data.map(function(post){
         posts = posts.concat({
           id: post.id,
           title: post.title.rendered,
           content: post.content.rendered,
-          date: post.date
+          date: post.date,
+          imgId: post.featured_image
         });
       });
-      Component.setState({
+      self.setState({
         posts: posts
       });
     });
@@ -112,6 +113,9 @@ var App = React.createClass({
       });
     });
   },
+  getImage: function(id, callback){
+    this.getData(this.props.wordpressUrl + '/wp-json/wp/v2/media/' + id, callback);
+  },
   getData: function(url, callback){
     $.ajax({
       url: url,
@@ -122,12 +126,14 @@ var App = React.createClass({
   },
   render: function(){
     var renderPage = function(state){
-      // console.log('Rendering ' + state.currentPage);
       switch (state.currentPage){
         case "home":
           return <Home />;
         case "blog":
-          return <Posts posts={state.posts} handleClickPost={this.handlePostChange} />;
+          return <Posts
+            posts={state.posts}
+            handleClickPost={this.handlePostChange}
+            getImage={this.getImage}/>;
         case "page":
           return <Page page={state.currentPage} />;
         case "single":
@@ -154,7 +160,6 @@ var Header = React.createClass({
   },
   render: function(){
     var renderNavPages = function(){
-      // console.log(this.props.pages);
 
     }.bind(this);
     return (
@@ -196,7 +201,6 @@ var Page = React.createClass({
     return (
       <div className="page">
           <div className="container">
-            // {console.log(this.props.page)}
             <div dangerouslySetInnerHTML={{__html: this.props.page.content}}></div>
           </div>
       </div>
@@ -213,7 +217,10 @@ var Posts = React.createClass({
   render: function(){
     var renderPosts = this.props.posts.map(function(post){
       return (
-        <Post post={post} key={post.id} handleClick={this.handleClick} />
+        <Post post={post}
+          key={post.id}
+          handleClick={this.handleClick}
+          getImage={this.props.getImage}/>
       );
     }.bind(this));
     return (
@@ -225,12 +232,25 @@ var Posts = React.createClass({
 });
 
 var Post = React.createClass({
+  getInitialState : function(){
+    return {
+      imgUrl : ''
+    };
+  },
+  componentDidMount: function(){
+    this.props.getImage(this.props.post.imgId, function(data){
+      this.setState({
+        imgUrl : data.source_url
+      });
+    }.bind(this));
+  },
   render: function(){
     return (
       <div className="post"
         data-post-id={this.props.post.id}
         onClick={this.props.handleClick}
-        style={{backgroundImage: 'url(' + this.props.post.imgUrl + ')'}}>
+
+        style={{backgroundImage: 'url(' + this.state.imgUrl + ')'}}>
         <h5 className="title">{this.props.post.title}</h5>
         <span className="date">{moment(new Date(this.props.post.date)).fromNow()}</span>
       </div>
