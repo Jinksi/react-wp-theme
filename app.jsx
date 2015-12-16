@@ -3,12 +3,12 @@ particlesJS.load('particles-js', 'particles.json', function() {
   console.log('callback - particles.js config loaded');
 });
 
+var TransitionGroup = React.addons.CSSTransitionGroup;
 
 var App = React.createClass({
   getDefaultProps: function(){
     return {
-      postsUrl: 'http://localhost:8888/react-wp-server/wp-json/wp/v2/posts',
-      pagesUrl: 'http://localhost:8888/react-wp-server/wp-json/wp/v2/pages'
+      wordpressUrl: 'http://localhost:8888/react-wp-server'
     };
   },
   getInitialState: function(){
@@ -35,7 +35,7 @@ var App = React.createClass({
     };
   },
   handlePageChange: function(target){
-    if(target === 'home' || target === 'posts'){
+    if(target === 'home' || target === 'blog'){
       this.setState({
         currentPage: target
       });
@@ -60,7 +60,7 @@ var App = React.createClass({
   },
   getPosts : function(){
     var Component = this;
-    var postData = this.getData(this.props.postsUrl, function(data){
+    var postData = this.getData(this.props.wordpressUrl + '/wp-json/wp/v2/posts', function(data){
       var posts = [];
       data.map(function(post){
         posts = posts.concat({
@@ -77,7 +77,7 @@ var App = React.createClass({
   },
   getPages : function(){
     var Component = this;
-    var pagesData = this.getData(this.props.pagesUrl, function(data){
+    var pagesData = this.getData(this.props.wordpressUrl + '/wp-json/wp/v2/pages', function(data){
       var pages = [];
       data.map(function(page){
         pages = pages.concat({
@@ -108,7 +108,7 @@ var App = React.createClass({
       switch (state.currentPage){
         case "home":
           return <Home />;
-        case "posts":
+        case "blog":
           return <Posts posts={state.posts} handleClickPost={this.handlePostChange}/>;
         case "page":
           return <Page page={state.currentPage} />;
@@ -119,11 +119,13 @@ var App = React.createClass({
       }
     }.bind(this);
     return (
-      <div className="app-container banner">
-        <Header handlePageChange={this.handlePageChange} pages={this.state.pages}/>
-          {renderPage(this.state)}
-        <Footer />
-      </div>
+      <TransitionGroup transitionName="fade" transitionAppear={true} transitionAppearTimeout={500} >
+        <div className="app-container banner">
+          <Header handlePageChange={this.handlePageChange} pages={this.state.pages}/>
+              {renderPage(this.state)}
+          <Footer />
+        </div>
+      </TransitionGroup>
     );
   }
 });
@@ -145,7 +147,7 @@ var Header = React.createClass({
           <p>This is the component <code>{'<Header/>'}</code></p>
             <ul>
               <li><a href="#home" onClick={this.handleClick}>Home</a></li>
-              <li><a href="#posts" onClick={this.handleClick}>Posts</a></li>
+              <li><a href="#blog" onClick={this.handleClick}>Blog</a></li>
               {this.props.pages.map(function(page){
                   return (
                     <li key={page.id}><a href={'#' + page.title} onClick={this.handleClick}>{page.title}</a></li>
