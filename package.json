@@ -15,6 +15,7 @@
     "react-router": "^1.0.2"
   },
   "devDependencies": {
-    "browser-sync": "^2.10.0"
+    "browser-sync": "^2.10.0",
+    "gulp-autoprefixer": "^3.1.0"
   }
 }
