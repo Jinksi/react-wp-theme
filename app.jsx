@@ -29,9 +29,18 @@ var App = React.createClass({
     };
   },
   handlePageChange: function(target){
-    this.setState({
-      currentPage: target
-    });
+    if(target === 'home' || target === 'posts'){
+      this.setState({
+        currentPage: target
+      });
+    }
+    this.state.pages.map(function(page){
+      if(page.title === target){
+        this.setState({
+          currentPage: page
+        });
+      }
+    }.bind(this));
   },
   handlePostChange: function(postId){
     this.state.posts.map(function(post){
@@ -98,9 +107,9 @@ var App = React.createClass({
         case "page":
           return <Page page={state.currentPage} />;
         case "single":
-          return <Single post={state.currentPost}/>;
+          return <Single post={state.currentPost} />;
         default:
-          return <NoMatch />;
+          return <Page page={state.currentPage} />;
       }
     }.bind(this);
     return (
@@ -151,6 +160,19 @@ var Home = React.createClass({
           <div className="container">
             <h4>Home Page</h4>
             <p>This is the component <code>{'<Home/>'}</code></p>
+          </div>
+      </div>
+    );
+  }
+});
+//≠≠≠≠≠≠≠≠≠ Page
+var Page = React.createClass({
+  render: function(){
+    return (
+      <div className="page">
+          <div className="container">
+            {console.log(this.props.page)}
+            <div dangerouslySetInnerHTML={{__html: this.props.page.content}}></div>
           </div>
       </div>
     );
