@@ -14,7 +14,7 @@ body {
   font-weight: 400;
   font-family: $font-family;
   color: $font-color;
-  background-image: linear-gradient(135deg, rgb(243, 66, 53) 33%, rgb(254, 86, 33) 100%);
+  background-image: linear-gradient(135deg, #212121 5%, #232323 100%);
   // background: white;
   min-height: 100vh;
   background-attachment: fixed;
@@ -28,6 +28,8 @@ body {
   justify-content: space-between;
   box-sizing: border-box;
   text-align: center;
+  z-index: 1;
+  position: relative;
 }
 // Links
 //––––––––––––––––––––––––––––––––––––––––––––––––––
