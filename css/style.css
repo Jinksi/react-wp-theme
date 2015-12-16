@@ -198,7 +198,8 @@ th {
 * Sass Version by Seth Coelen https://github.com/whatsnewsaes
 */
 html {
-  font-size: 62.5%; }
+  font-size: 62.5%;
+  background: #212121; }
 
 body {
   font-size: 1.5em;
@@ -206,15 +207,21 @@ body {
   font-weight: 400;
   font-family: "Avenir", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: white;
-  background-image: linear-gradient(135deg, #212121 5%, #232323 100%);
+  background-image: linear-gradient(135deg, #212121 5%, #212121 100%);
   min-height: 100vh;
   background-attachment: fixed;
   background-size: cover; }
 
 .app-container {
   min-height: 100vh;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
   justify-content: space-between;
   box-sizing: border-box;
   text-align: center;
@@ -428,7 +435,7 @@ button {
   display: inline-block;
   height: 38px;
   padding: 0 30px;
-  color: #555555;
+  color: #434343;
   text-align: center;
   font-size: 11px;
   font-weight: 600;
@@ -447,7 +454,7 @@ input[type="submit"], input[type="reset"], input[type="button"] {
   display: inline-block;
   height: 38px;
   padding: 0 30px;
-  color: #555555;
+  color: #434343;
   text-align: center;
   font-size: 11px;
   font-weight: 600;
@@ -464,24 +471,24 @@ input[type="submit"], input[type="reset"], input[type="button"] {
 
 .button:hover,
 button:hover {
-  color: #333;
-  border-color: #888888;
+  color: #212121;
+  border-color: #767676;
   outline: 0; }
 
 input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover {
-  color: #333;
-  border-color: #888888;
+  color: #212121;
+  border-color: #767676;
   outline: 0; }
 
 .button:focus,
 button:focus {
-  color: #333;
-  border-color: #888888;
+  color: #212121;
+  border-color: #767676;
   outline: 0; }
 
 input[type="submit"]:focus, input[type="reset"]:focus, input[type="button"]:focus {
-  color: #333;
-  border-color: #888888;
+  color: #212121;
+  border-color: #767676;
   outline: 0; }
 
 .button.button-primary,
@@ -648,7 +655,11 @@ form {
 
 .header ul {
   list-style: none;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
   justify-content: center;
   width: 100%; }
   .header ul li {
@@ -656,42 +667,62 @@ form {
     text-transform: uppercase; }
 
 .posts {
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  padding: 0 20px; }
 
 .post {
-  flex-basis: 42%;
-  margin: 0 0 20px 0;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid white;
-  padding: 25px;
+  margin: 0 0 0px 0;
+  background-color: #212121;
   text-align: left;
-  transition: all .3s ease; }
+  transition: all .3s ease;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: lighten;
+  background-attachment: fixed;
+  padding: 100px 100px 100px 50%; }
+  .post:nth-child(2n) {
+    padding: 100px 50% 100px 100px;
+    text-align: right; }
   .post:not(.single):hover {
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.25); }
-  .post.single {
-    margin: 0 auto; }
+    background-color: rgba(33, 33, 33, 0.9); }
   .post .title {
     pointer-events: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
   .post img {
     max-width: 100%; }
 
+.single {
+  padding: 20px; }
+  .single .single-wrap {
+    padding: 100px; }
+  .single .featured-image {
+    height: 300px;
+    background-position: center;
+    background-size: cover; }
+
+.footer {
+  margin-top: 100px; }
+
 /* ---- particles.js container ---- */
 #particles-js {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background-repeat: no-repeat;
-  background-size: 20%;
-  background-position: 50% 50%;
   z-index: 0; }
 
 .fade-appear {

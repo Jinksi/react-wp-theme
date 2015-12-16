@@ -1,6 +1,6 @@
 /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
 particlesJS.load('particles-js', 'particles.json', function() {
-  console.log('callback - particles.js config loaded');
+  // callback
 });
 
 var TransitionGroup = React.addons.CSSTransitionGroup;
@@ -15,15 +15,33 @@ var App = React.createClass({
     var posts = [
       {
         id:1,
-        title:'Default',
-        content: 'none'
+        title:'Post 1',
+        content: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod. Aenean lacinia bibendum nulla sed consectetur. Donec sed odio dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        date: '2015/12/14',
+        imgUrl: 'https://unsplash.it/1920/1080?random'
+      },
+      {
+        id:2,
+        title:'Post 2',
+        content: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod. Aenean lacinia bibendum nulla sed consectetur. Donec sed odio dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        date: '2015/12/10',
+        imgUrl: 'https://unsplash.it/1920/1081?random'
+
+      },
+      {
+        id:3,
+        title:'This is another post',
+        content: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod. Aenean lacinia bibendum nulla sed consectetur. Donec sed odio dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        date: '2015/07/10',
+        imgUrl: 'https://unsplash.it/1920/1082?random'
+
       }
     ];
     var pages = [
       {
-        id:2,
-        title: 'Default',
-        content: 'none'
+        id:1,
+        title: 'Home',
+        content: '<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Etiam porta sem malesuada magna mollis euismod. Aenean lacinia bibendum nulla sed consectetur. Donec sed odio dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
       }
     ];
     this.getPosts();
@@ -31,7 +49,7 @@ var App = React.createClass({
     return {
       posts: posts,
       pages: pages,
-      currentPage: 'home'
+      currentPage: pages[0]
     };
   },
   handlePageChange: function(target){
@@ -104,12 +122,12 @@ var App = React.createClass({
   },
   render: function(){
     var renderPage = function(state){
-      console.log('Rendering ' + state.currentPage);
+      // console.log('Rendering ' + state.currentPage);
       switch (state.currentPage){
         case "home":
           return <Home />;
         case "blog":
-          return <Posts posts={state.posts} handleClickPost={this.handlePostChange}/>;
+          return <Posts posts={state.posts} handleClickPost={this.handlePostChange} />;
         case "page":
           return <Page page={state.currentPage} />;
         case "single":
@@ -119,13 +137,11 @@ var App = React.createClass({
       }
     }.bind(this);
     return (
-      <TransitionGroup transitionName="fade" transitionAppear={true} transitionAppearTimeout={500} >
-        <div className="app-container banner">
-          <Header handlePageChange={this.handlePageChange} pages={this.state.pages}/>
-              {renderPage(this.state)}
-          <Footer />
-        </div>
-      </TransitionGroup>
+      <div className="app-container banner">
+        <Header handlePageChange={this.handlePageChange} pages={this.state.pages}/>
+          {renderPage(this.state)}
+        <Footer />
+      </div>
     );
   }
 });
@@ -138,7 +154,7 @@ var Header = React.createClass({
   },
   render: function(){
     var renderNavPages = function(){
-      console.log(this.props.pages);
+      // console.log(this.props.pages);
 
     }.bind(this);
     return (
@@ -146,13 +162,14 @@ var Header = React.createClass({
         <div className="container">
           <p>This is the component <code>{'<Header/>'}</code></p>
             <ul>
-              <li><a href="#home" onClick={this.handleClick}>Home</a></li>
-              <li><a href="#blog" onClick={this.handleClick}>Blog</a></li>
+              {/*<li><a href="#home" onClick={this.handleClick}>Home</a></li>*/}
               {this.props.pages.map(function(page){
                   return (
                     <li key={page.id}><a href={'#' + page.title} onClick={this.handleClick}>{page.title}</a></li>
                   );
                 }.bind(this))}
+              <li><a href="#blog" onClick={this.handleClick}>Blog</a></li>
+
             </ul>
         </div>
       </header>
@@ -179,7 +196,7 @@ var Page = React.createClass({
     return (
       <div className="page">
           <div className="container">
-            {console.log(this.props.page)}
+            // {console.log(this.props.page)}
             <div dangerouslySetInnerHTML={{__html: this.props.page.content}}></div>
           </div>
       </div>
@@ -196,11 +213,11 @@ var Posts = React.createClass({
   render: function(){
     var renderPosts = this.props.posts.map(function(post){
       return (
-        <Post post={post} key={post.id} handleClick={this.handleClick}/>
+        <Post post={post} key={post.id} handleClick={this.handleClick} />
       );
     }.bind(this));
     return (
-      <div className="posts container">
+      <div className="posts">
         {renderPosts}
       </div>
     );
@@ -210,9 +227,12 @@ var Posts = React.createClass({
 var Post = React.createClass({
   render: function(){
     return (
-      <div className="post" data-post-id={this.props.post.id} onClick={this.props.handleClick}>
+      <div className="post"
+        data-post-id={this.props.post.id}
+        onClick={this.props.handleClick}
+        style={{backgroundImage: 'url(' + this.props.post.imgUrl + ')'}}>
         <h5 className="title">{this.props.post.title}</h5>
-        <span className="date">{moment(this.props.post.date).format("MMM Do YYYY")}</span>
+        <span className="date">{moment(new Date(this.props.post.date)).fromNow()}</span>
       </div>
     );
   }
@@ -221,10 +241,13 @@ var Post = React.createClass({
 var Single = React.createClass({
   render: function(){
     return (
-      <div className="post single container">
-        <h5 className="title">{this.props.post.title}</h5>
-        <span className="date">{moment(this.props.post.date).format("MMM Do YYYY")}</span>
-        <div className="post-content" dangerouslySetInnerHTML={{__html: this.props.post.content}} />
+      <div className="post single">
+        <div className="featured-image" style={{backgroundImage: 'url(' + this.props.post.imgUrl + ')'}}></div>
+        <div className="single-wrap">
+          <h5 className="title">{this.props.post.title}</h5>
+          <span className="date">{moment(this.props.post.date).format("MMM Do YYYY")}</span>
+          <div className="post-content" dangerouslySetInnerHTML={{__html: this.props.post.content}} />
+        </div>
       </div>
     );
   }
@@ -248,9 +271,11 @@ var NoMatch = React.createClass({
 var Footer = React.createClass({
   render: function(){
     return (
-        <div className="container">
-          <p>This is the component <code>{'<Footer/>'}</code></p>
-        </div>
+      <footer className="footer">
+          <div className="container">
+            <p>This is the component <code>{'<Footer/>'}</code></p>
+          </div>
+        </footer>
     );
   }
 });
